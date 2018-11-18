@@ -9,8 +9,18 @@
 </head>
 <body>
     {% block content %}
-        {{ post.title }}
-        <img src="{{ post.image.url }}" alt="">
+        <h5>{{ post.title }}</h5>
+        <br>
+        <img src="{{ post.image.url }}" height="350px" alt="">
+        <p>{{ post.text |safe}}</p>
+        <br>
+        <p>Автор статьи: {{ post.user }}</p>
+        <br>
+        <p>Относится к: {{ post.category }}</p>
+        <br>
+        <p>Дата создания: {{ post.date }}</p>
+
     {% endblock %}
+    <a href="{% url 'posts_list_url'%}">Back</a>
 </body>
 </html>

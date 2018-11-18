@@ -1,5 +1,7 @@
 from django.db import models
 from django.shortcuts import reverse
+from django.contrib.auth import get_user_model
+User = get_user_model()
 # Create your models here.
 
 class Categories(models.Model):
@@ -12,9 +14,12 @@ class Categories(models.Model):
 
 class Post(models.Model):
     category = models.ForeignKey('Categories', on_delete=models.CASCADE,null=True,blank=True)
+    user = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
+    text = models.TextField('Текст статьи', null=True,blank=True)
     slug = models.SlugField(max_length=100)
     title = models.CharField(max_length=100)
     image = models.ImageField()
+    date = models.DateTimeField(auto_now_add=True)
 
 
     def __str__(self):
