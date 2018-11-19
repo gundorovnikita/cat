@@ -9,14 +9,14 @@
 </head>
 <body>
     {% block content %}
-        <h5>{{ post.title }}</h5>
+        <h2>{{ post.title }}</h2>
         <br>
         <img src="{{ post.image.url }}" height="350px" alt="">
         <p>{{ post.text |safe}}</p>
         <br>
         <p>Автор статьи: {{ post.user }}</p>
         <br>
-        <p>Относится к: {{ post.category }}</p>
+        <p>Относится к: <a href="#">{{ post.category }}</a></p>
         <br>
         <p>Дата создания: {{ post.date }}</p>
 

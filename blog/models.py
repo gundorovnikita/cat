@@ -12,9 +12,10 @@ class Categories(models.Model):
         return self.name
 
 
+
 class Post(models.Model):
-    category = models.ForeignKey('Categories', on_delete=models.CASCADE,null=True,blank=True)
-    user = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
+    category = models.ForeignKey('Categories', on_delete=models.SET_NULL,null=True)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
     text = models.TextField('Текст статьи', null=True,blank=True)
     slug = models.SlugField(max_length=100)
     title = models.CharField(max_length=100)

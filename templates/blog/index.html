@@ -7,7 +7,15 @@
     <title>Document</title>
 </head>
 <body>
+  Категории:
+    {% for categories in category %}
+       <br>
+       <a href="#">{{ categories.name }} </a>
+    {% endfor %}
+    <br>
+  Посты:
     {% for post in posts %}
+        <br>
         <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
     {% endfor %}
 </body>
