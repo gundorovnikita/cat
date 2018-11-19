@@ -8,6 +8,9 @@ class Categories(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(max_length=100)
 
+    def get_absolute_url(self):
+        return reverse('categories_detail_url', kwargs={'slug': self.slug})
+
     def __str__(self):
         return self.name
 

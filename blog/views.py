@@ -17,3 +17,10 @@ def post_detail(request, slug):
         'post':post,
     }
     return render(request, 'blog/detail.html' , context)
+
+def Categories_detail(request, slug):
+    category = Categories.objects.get(slug=slug)
+    context= {
+        'category':category,
+    }
+    return render(request, 'blog/category.html' , context)

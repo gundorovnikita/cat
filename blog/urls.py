@@ -5,5 +5,6 @@ from .models import *
 
 urlpatterns = [
     path('', posts_list, name='posts_list_url') ,
-    path('<str:slug>', post_detail, name='post_detail_url')
+    path('<str:slug>', post_detail, name='post_detail_url'),
+    path('category/<str:slug>', Categories_detail, name='categories_detail_url'),
 ]

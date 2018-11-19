@@ -10,7 +10,7 @@
   Категории:
     {% for categories in category %}
        <br>
-       <a href="#">{{ categories.name }} </a>
+       <a href="{{ categories.get_absolute_url }}">{{ categories.name }} </a>
     {% endfor %}
     <br>
   Посты:

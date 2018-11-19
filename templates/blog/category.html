@@ -9,17 +9,9 @@
 </head>
 <body>
     {% block content %}
-        <h2>{{ post.title }}</h2>
+        Относятся к категории {{category.name}} следующие посты:
         <br>
-        <img src="{{ post.image.url }}" height="350px" alt="">
-        <p>{{ post.text |safe}}</p>
-        <br>
-        <p>Автор статьи: {{ post.user }}</p>
-        <br>
-        <p>Относится к категории: {{ post.category }}</p>
-        <br>
-        <p>Дата создания: {{ post.date }}</p>
-
+        {{articles}}
     {% endblock %}
     <a href="{% url 'posts_list_url'%}">Back</a>
 </body>
