@@ -33,3 +33,10 @@ def Categories_detail(request, slug):
         'contacts':contacts,
     }
     return render(request, 'blog/category.html' , context)
+
+def post_random(request):
+    posts = Post.objects.all().order_by('?')[:1]
+    context= {
+        'posts': posts,
+    }
+    return render(request, 'blog/random.html', context)

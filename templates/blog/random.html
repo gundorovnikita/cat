@@ -1,0 +1,14 @@
+{% for post in posts %}
+    <h2>{{ post.title }}</h2>
+    <p>Ссылка на статью: http://127.0.0.1:8000/posts/{{ post.slug}}</p>
+    <br>
+    <img src="{{ post.image.url }}" height="350px" alt="">
+    <p>{{ post.text |safe}}</p>
+    <br>
+    <p>Автор статьи: {{ post.user }}</p>
+    <br>
+    <p>Относиться к категории: {{ post.category }}</p>
+    <br>
+    <p>Дата создания: {{ post.date }}</p>
+{% endfor %}
+<a href="{% url 'posts_list_url'%}">Back</a>
