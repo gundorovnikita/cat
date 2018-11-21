@@ -11,7 +11,11 @@
     {% block content %}
         Относятся к категории {{category.name}} следующие посты:
         <br>
-        {{articles}}
+        {% for post in pages %}
+            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+            <br>
+        {% endfor %}
+        <hr>
     {% endblock %}
     <a href="{% url 'posts_list_url'%}">Back</a>
 </body>
