@@ -16,7 +16,7 @@
         <br>
         <p>Автор статьи: {{ post.user }}</p>
         <br>
-        <p>Относиться к категории: {{ post.category }}</p>
+        <p>Относиться к категории: <a href="http://localtest.me:8000/posts/category/{{ post.category }}">{{ post.category }}</a></p>
         <br>
         <p>Дата создания: {{ post.date }}</p>
 
