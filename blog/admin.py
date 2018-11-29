@@ -11,3 +11,4 @@ class SomeModelAdmin(SummernoteModelAdmin, admin.ModelAdmin):
 # Register your models here.
 admin.site.register(Post, SomeModelAdmin)
 admin.site.register(Categories)
+admin.site.register(Comment)

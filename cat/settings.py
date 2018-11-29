@@ -25,7 +25,7 @@ SECRET_KEY = 'ej32@yoe+8hoalbay-l9q@vtg5x%0@10k058bqe(wah_bcm1wj'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localtest.me']
+ALLOWED_HOSTS = ['localtest.me', '127.0.0.1']
 
 
 # Application definition

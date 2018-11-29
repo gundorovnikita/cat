@@ -16,10 +16,29 @@
         <br>
         <p>Автор статьи: {{ post.user }}</p>
         <br>
-        <p>Относиться к категории: <a href="http://localtest.me:8000/posts/category/{{ post.category }}">{{ post.category }}</a></p>
+        <p>Относиться к категории: <a href="http://localtest.me:8000/posts/category/{{ post.category.slug }}">{{ post.category }}</a></p>
         <br>
         <p>Дата создания: {{ post.date }}</p>
+        <hr>
 
+        <p>Оставить комментарий</p>
+        <form method="POST">
+          {% csrf_token %}
+          {{ comment_form.as_p }}
+          <input type="submit"  value="подтвердить">
+        </form>
+        <br>
+
+        <hr>
+        <p>Комментарии:</p>
+        <p>
+          {% for comment in comments %}
+              <p>Anonim: {{ comment.text}}</p>
+              <br>
+          {% endfor %}
+        </p>
+
+        <hr>
     {% endblock %}
     <a href="{% url 'posts_list_url'%}">Back</a>
 </body>

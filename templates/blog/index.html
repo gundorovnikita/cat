@@ -9,6 +9,8 @@
 <body>
   <a href="{% url 'post_random_url'%}">Случайный пост</a>
   <hr>
+  <a href="{% url 'post_create_url'%}">Создать свой пост</a>
+  <hr>
   Категории:
     {% for categories in category %}
        <br>
@@ -16,7 +18,6 @@
     {% endfor %}
     <hr>
   Посты:
-  <br>
   <br>
 
     {% for post in contacts %}

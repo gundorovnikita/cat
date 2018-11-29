@@ -31,3 +31,11 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('post_detail_url', kwargs={'slug': self.slug})
+
+
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.SET_NULL,null=True)
+    text = models.TextField(max_length=180)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return self.text
