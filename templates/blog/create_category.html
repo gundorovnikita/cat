@@ -1,0 +1,8 @@
+<form method="post">
+  {% csrf_token %}
+  {{ create.as_p }}
+  <button type="submit">Создать категорию</button>
+
+</form>
+<hr>
+<a href="{% url 'post_create_url'%}">Back</a>
