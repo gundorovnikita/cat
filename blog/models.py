@@ -20,10 +20,10 @@ class Post(models.Model):
     category = models.ForeignKey('Categories', on_delete=models.SET_NULL,null=True)
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     text = models.TextField('Текст статьи', null=True,blank=True)
-    slug = models.SlugField(max_length=100)
-    title = models.CharField(max_length=100)
+    slug = models.SlugField(max_length=100, blank=True)
+    title = models.CharField(max_length=100, blank=True)
     image = models.ImageField()
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField(auto_now_add=True, blank=True)
 
 
     def __str__(self):

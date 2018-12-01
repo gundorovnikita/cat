@@ -1,6 +1,8 @@
-<form method="post">
+<form enctype="multipart/form-data" method="post">
   {% csrf_token %}
-  <input type="text">
+  {{ create.as_p }}
   <button type="submit">Предложить пост</button>
 
 </form>
+<hr>
+<a href="{% url 'posts_list_url'%}">Back</a>

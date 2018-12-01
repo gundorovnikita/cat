@@ -2,8 +2,10 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import HttpResponseRedirect
 from .models import Post, Categories, Comment
-from .forms import CommentForm
+from .forms import CommentForm, CreateForm
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+import datetime
+from django.utils import timezone
 
 #if request.method == "POST":
 #    comment = Comment(request.POST)
@@ -28,7 +30,7 @@ def posts_list(request):
 
 def post_detail(request, slug):
     post = Post.objects.get(slug=slug)
-    comments = Comment.objects.filter(post=post).order_by('-timestamp')
+    comments = Comment.objects.filter(post=post).order_by('-timestamp')[:10]
     comment_form=CommentForm()
     if request.method == 'POST':
         comment_form = CommentForm(request.POST or None)
@@ -67,4 +69,17 @@ def post_random(request):
     return render(request, 'blog/random.html', context)
 
 def post_create(request):
-    return render(request, 'blog/create.html')
+    if request.method == 'POST':
+        create = CreateForm(request.POST, request.FILES)
+        if create.is_valid():
+            post = create.save(commit=False)
+            post.user = request.user
+            post.date = timezone.now()
+            post.save()
+            return redirect('http://127.0.0.1:8000/posts/create')
+    else:
+        create = CreateForm()
+    context= {
+        'create': create,
+    }
+    return render(request, 'blog/create.html', context)

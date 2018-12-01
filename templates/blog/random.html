@@ -1,7 +1,7 @@
 <a href="{% url 'post_random_url'%}">Случайный пост</a>
 <hr>
 {% for post in posts %}
-    <a href="http://localtest.me:8000/posts/{{ post.slug}}">Оригинал статьи</a>
+    <a href="http://localtest.me:8000/posts/ind/{{ post.slug}}">Оригинал статьи</a>
     <br>
     <h2>{{ post.title }}</h2>
     <br>
@@ -13,5 +13,6 @@
     <p>Относиться к категории: <a href="http://localtest.me:8000/posts/category/{{ post.category }}">{{ post.category }}</a></p>
     <br>
     <p>Дата создания: {{ post.date }}</p>
+    <hr>
 {% endfor %}
 <a href="{% url 'posts_list_url'%}">Back</a>
