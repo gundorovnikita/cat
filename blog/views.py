@@ -23,6 +23,20 @@ def posts_list(request):
     }
     return render(request, 'blog/index.html', context)
 
+def posts_list_likes(request):
+    posts = Post.objects.all().order_by('-likes')
+    category = Categories.objects.all()
+    count = Post.objects.all().count()
+    paginator = Paginator(posts, 4)
+    page = request.GET.get('page')
+    contacts = paginator.get_page(page)
+    context= {
+        'count':count,
+        'contacts':contacts,
+        'category':category,
+    }
+    return render(request, 'blog/index.html', context)
+
 def post_detail(request, slug):
     post = Post.objects.get(slug=slug)
     comments = Comment.objects.filter(post=post).order_by('-timestamp')

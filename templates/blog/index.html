@@ -18,9 +18,12 @@
     {% endfor %}
     <hr>
   <p>Всего {{count}} постов:</p>
+  <p>Сортировать по <a href="{% url 'posts_likes_url'%}">Популярности</a>
+    <a href="{% url 'posts_list_url'%}">Дате публикации</a>
+  </p>
+
 
     {% for post in contacts %}
-        <br>
         <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
         <br>
         <img src="{{ post.image.url }}" alt="" height="250px">
