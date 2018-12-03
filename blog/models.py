@@ -20,11 +20,14 @@ class Post(models.Model):
     category = models.ForeignKey('Categories', on_delete=models.SET_NULL,null=True)
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     text = models.TextField('Текст статьи', null=True,blank=True)
-    slug = models.SlugField(max_length=100, blank=True)
+    slug = models.SlugField(max_length=100, unique=True)
+    likes = models.ManyToManyField(User, related_name='likes', blank=True)
     title = models.CharField(max_length=100, blank=True)
     image = models.ImageField()
     date = models.DateTimeField(auto_now_add=True, blank=True)
 
+    def total_likes(self):
+        return self.likes.count()
 
     def __str__(self):
         return self.title

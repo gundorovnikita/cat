@@ -10,4 +10,5 @@ urlpatterns = [
     path('random', post_random, name='post_random_url'),
     path('ind/<str:slug>', post_detail, name='post_detail_url'),
     path('category/<str:slug>', Categories_detail, name='categories_detail_url'),
+    path('like', like_post, name='like_post_url'),
 ]

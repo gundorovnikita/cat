@@ -3,18 +3,11 @@ from django.shortcuts import redirect
 from django.http import HttpResponseRedirect
 from .models import Post, Categories, Comment
 from .forms import CommentForm, CreateForm, CreateCategory
+from django.shortcuts import get_object_or_404
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 import datetime
 from django.utils import timezone
 
-#if request.method == "POST":
-#    comment = Comment(request.POST)
-#    return redirect('post_detail_url', slug=post.slug)
-#else:
-#    comment = Comment()
-
-
-# Create your views here.
 
 def posts_list(request):
     posts = Post.objects.all().order_by('-date')
@@ -32,9 +25,15 @@ def posts_list(request):
 
 def post_detail(request, slug):
     post = Post.objects.get(slug=slug)
-    comments = Comment.objects.filter(post=post).order_by('-timestamp')[:10]
+    comments = Comment.objects.filter(post=post).order_by('-timestamp')
     total = Comment.objects.filter(post=post).count()
+    paginator = Paginator(comments, 6)
+    page = request.GET.get('page')
+    contacts = paginator.get_page(page)
     comment_form=CommentForm()
+    is_liked = False
+    if post.likes.filter(id=request.user.id).exists():
+        is_liked = True
     if request.method == 'POST':
         comment_form = CommentForm(request.POST or None)
         if comment_form.is_valid():
@@ -48,10 +47,25 @@ def post_detail(request, slug):
     context= {
         'total':total,
         'post':post,
-        'comments':comments,
         'comment_form': comment_form,
+        'contacts': contacts,
+        'is_liked': is_liked,
+        'total_likes': post.total_likes(),
     }
     return render(request, 'blog/detail.html' , context)
+
+def like_post(request):
+    post = get_object_or_404(Post, id=request.POST.get('post_id'))
+    is_liked = False
+    if post.likes.filter(id=request.user.id).exists():
+        post.likes.remove(request.user)
+        is_liked = False
+    else:
+        post.likes.add(request.user)
+        is_liked = True
+    return HttpResponseRedirect(post.get_absolute_url())
+
+
 
 def Categories_detail(request, slug):
     category = Categories.objects.get(slug=slug)
@@ -80,7 +94,7 @@ def post_create(request):
             post.user = request.user
             post.date = timezone.now()
             post.save()
-            return redirect('http://127.0.0.1:8000/posts/create')
+            return redirect('http://localtest.me:8000/posts')
     else:
         create = CreateForm()
     context= {
@@ -94,7 +108,7 @@ def category_create(request):
         if create.is_valid():
             name = create.save(commit=False)
             name.save()
-            return redirect('http://127.0.0.1:8000/posts/create/category')
+            return redirect('http://localtest.me:8000/posts/create')
     else:
         create = CreateCategory()
     context= {

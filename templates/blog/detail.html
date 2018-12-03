@@ -20,7 +20,16 @@
         <br>
         <p>Дата создания: {{ post.date }}</p>
         <hr>
-
+        Количество лайков: {{ total_likes }}
+        <form action='{% url 'like_post_url' %}' method='post'>
+          {% csrf_token %}
+          {% if is_liked %}
+            <button type='submit' name='post_id' value='{{post.id}}'>Убрать лайк</button>
+          {% else %}
+            <button type='submit' name='post_id' value='{{post.id}}'>Лайк</button>
+          {% endif %}
+        </form>
+        <br>
         <p>Оставить комментарий</p>
         <form method="POST">
           {% csrf_token %}
@@ -33,14 +42,31 @@
         <p>Всего комментариев: {{ total }}</p>
         <br>
         <p>
-          {% for comment in comments %}
-              <p>Anonim: {{ comment.text}}</p>
+          {% for comments in contacts %}
+              <p>Anonim: {{ comments.text}}</p>
               <br>
           {% endfor %}
         </p>
 
-        <hr>
     {% endblock %}
+    <div class="pagination">
+    <span class="step-links">
+        {% if contacts.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ contacts.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.
+        </span>
+
+        {% if contacts.has_next %}
+            <a href="?page={{ contacts.next_page_number }}">next</a>
+            <a href="?page={{ contacts.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+<hr>
     <a href="{% url 'posts_list_url'%}">Back</a>
 </body>
 </html>
