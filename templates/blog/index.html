@@ -7,13 +7,17 @@
     <title>Document</title>
 </head>
 <body>
+  {{ user }}
   <a href="{% url 'user_login_url'%}">Войти</a>
   <a href="{% url 'user_logout_url'%}">Выйти</a>
   <a href="{% url 'register_url'%}">Зарегистрироваться</a>
   <hr>
   <a href="{% url 'post_random_url'%}">Случайный пост</a>
-  <br>
-  <a href="{% url 'post_create_url'%}">Создать свой пост</a>
+  {% if request.user.is_authenticated %}
+    <br>
+    <a href="{% url 'post_create_url'%}">Создать свой пост</a>
+  {% else %}
+  {% endif %}
   <hr>
   Категории:
     {% for categories in category %}

@@ -1,9 +1,13 @@
-<a href="{% url 'category_create_url'%}">Создать Категорию</a>
-<form enctype="multipart/form-data" method="post">
-  {% csrf_token %}
-  {{ create.as_p }}
-  <button type="submit">Предложить пост</button>
+{% if request.user.is_authenticated %}
+  <a href="{% url 'category_create_url'%}">Создать Категорию</a>
+  <form enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    {{ create.as_p }}
+    <button type="submit">Предложить пост</button>
 
-</form>
-<hr>
+  </form>
+  <hr>
+{% else %}
+<p><a href="{% url 'register_url'%}">Зарегистрируйтесь</a>, прежде чем создать пост </p>
+{% endif %}
 <a href="{% url 'posts_list_url'%}">Back</a>

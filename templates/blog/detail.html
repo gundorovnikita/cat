@@ -19,9 +19,10 @@
         <p>Относиться к категории: <a href="http://localtest.me:8000/posts/category/{{ post.category.slug }}">{{ post.category }}</a></p>
         <br>
         <p>Дата создания: {{ post.date }}</p>
-        {% if request.user.is_authenticated %}
         <hr>
         Количество лайков: {{ total_likes }}
+        {% if request.user.is_authenticated %}
+
         <form action='{% url 'like_post_url' %}' method='post'>
           {% csrf_token %}
           {% if is_liked %}
@@ -38,6 +39,8 @@
           <input type="submit"  value="подтвердить">
         </form>
         <br>
+        {% else %}
+        <p>Чтобы оставить лайк <a href="{% url 'user_login_url'%}">войдите</a> на сайт или <a href="{% url 'register_url'%}">зарегестрируйтесь</a></p>
         {% endif %}
         <hr>
         <p>Всего комментариев: {{ total }}</p>

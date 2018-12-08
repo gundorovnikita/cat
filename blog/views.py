@@ -167,6 +167,7 @@ def register(request):
             new_user = form.save(commit=False)
             new_user.set_password(form.cleaned_data['password'])
             new_user.save()
+            logout(request)
             return redirect('posts_list_url')
     else:
         form = UserRegistrationForm()
