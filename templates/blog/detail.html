@@ -19,6 +19,7 @@
         <p>Относиться к категории: <a href="http://localtest.me:8000/posts/category/{{ post.category.slug }}">{{ post.category }}</a></p>
         <br>
         <p>Дата создания: {{ post.date }}</p>
+        {% if request.user.is_authenticated %}
         <hr>
         Количество лайков: {{ total_likes }}
         <form action='{% url 'like_post_url' %}' method='post'>
@@ -37,13 +38,13 @@
           <input type="submit"  value="подтвердить">
         </form>
         <br>
-
+        {% endif %}
         <hr>
         <p>Всего комментариев: {{ total }}</p>
         <br>
         <p>
           {% for comments in contacts %}
-              <p>Anonim: {{ comments.text}}</p>
+              <p>{{ comments.user }}: {{ comments.text}}</p>
               <br>
           {% endfor %}
         </p>

@@ -9,7 +9,7 @@
 </head>
 <body>
     {% block content %}
-        Относятся к категории {{category.name}} следующие посты:
+        Количество постов относящихся к категории {{category.name}} состовляет число: {{count}}, вот список этих постов:
         <br>
         <br>
         {% for post in contacts %}

@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
+from django.urls import reverse
 from .models import Post, Categories, Comment
-from .forms import CommentForm, CreateForm, CreateCategory
+from .forms import *
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import get_object_or_404
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 import datetime
@@ -52,7 +54,7 @@ def post_detail(request, slug):
         comment_form = CommentForm(request.POST or None)
         if comment_form.is_valid():
             text = request.POST.get('text')
-            text = Comment.objects.create(post=post, text=text)
+            text = Comment.objects.create(post=post, text=text, user=request.user)
             text.save()
             return HttpResponseRedirect(post.get_absolute_url())
     else:
@@ -84,12 +86,14 @@ def like_post(request):
 def Categories_detail(request, slug):
     category = Categories.objects.get(slug=slug)
     pages = Post.objects.filter(category=category).order_by('-date')
+    count = Post.objects.filter(category=category).count()
     paginator = Paginator(pages, 3) # Show 25 contacts per page
     page = request.GET.get('page')
     contacts = paginator.get_page(page)
     context= {
         'category':category,
         'contacts':contacts,
+        'count':count,
     }
     return render(request, 'blog/category.html' , context)
 
@@ -129,3 +133,44 @@ def category_create(request):
         'create': create,
     }
     return render(request, 'blog/create_category.html', context)
+
+def user_login(request):
+    if request.method == "POST":
+        form = UserLoginForm(request.POST)
+        if form.is_valid():
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(username=username, password=password)
+            if user:
+                if user.is_active:
+                    login(request, user)
+                    return HttpResponseRedirect(reverse('posts_list_url'))
+                else:
+                    return HttpResponseRedirect('User is not active')
+            else:
+                return HttpResponse('User is None')
+    else:
+        form = UserLoginForm()
+    context={
+        'form':form,
+    }
+    return render(request, 'blog/login.html', context)
+
+def user_logout(request):
+    logout(request)
+    return redirect('posts_list_url')
+
+def register(request):
+    if request.method == 'POST':
+        form = UserRegistrationForm(request.POST or None)
+        if form.is_valid():
+            new_user = form.save(commit=False)
+            new_user.set_password(form.cleaned_data['password'])
+            new_user.save()
+            return redirect('posts_list_url')
+    else:
+        form = UserRegistrationForm()
+    context = {
+        'form':form,
+    }
+    return render(request,'registration/register.html', context)

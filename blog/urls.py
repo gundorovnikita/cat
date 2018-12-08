@@ -12,4 +12,7 @@ urlpatterns = [
     path('category/<str:slug>', Categories_detail, name='categories_detail_url'),
     path('like', like_post, name='like_post_url'),
     path('sort_by_likes', posts_list_likes, name='posts_likes_url'),
+    path('login', user_login, name='user_login_url'),
+    path('logout', user_logout, name='user_logout_url'),
+    path('register', register, name='register_url'),
 ]

@@ -7,14 +7,17 @@
     <title>Document</title>
 </head>
 <body>
-  <a href="{% url 'post_random_url'%}">Случайный пост</a>
+  <a href="{% url 'user_login_url'%}">Войти</a>
+  <a href="{% url 'user_logout_url'%}">Выйти</a>
+  <a href="{% url 'register_url'%}">Зарегистрироваться</a>
   <hr>
+  <a href="{% url 'post_random_url'%}">Случайный пост</a>
+  <br>
   <a href="{% url 'post_create_url'%}">Создать свой пост</a>
   <hr>
   Категории:
     {% for categories in category %}
-       <br>
-       <a href="{{ categories.get_absolute_url }}">{{ categories.name }} </a>
+       <a href="{{ categories.get_absolute_url }}">{{ categories.name }} , </a>
     {% endfor %}
     <hr>
   <p>Всего {{count}} постов:</p>
